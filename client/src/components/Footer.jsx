@@ -7,7 +7,7 @@ import { IoLink } from "react-icons/io5";
 
 export default function FooterCom() {
   return (
-    <Footer container className="border border-t-8 border-fuchsia-600">
+    <Footer container className="border-t-2 border-t-gray-400 border-l-2 border-l-gray-400 border-r-2 border-r-gray-400 border-b-8 border-b-fuchsia-600 rounded-none">
       <div className="w-full max-w-7xl mx-auto">
         <div className="grid w-full justify-between sm:flex md:grid-cols-1">
           <div className="mt-5">
