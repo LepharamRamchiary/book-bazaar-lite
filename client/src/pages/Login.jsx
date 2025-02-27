@@ -1,9 +1,60 @@
 import React, { useState } from "react";
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  signInSuccess,
+  signInFailure,
+  signInStart,
+} from "../redux/user/userSlice.js";
+import { useDispatch, useSelector } from "react-redux";
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 function Login() {
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({});
+  const { loading, error: error } = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!formData.username || !formData.password) {
+      return dispatch(signInFailure("All fill are required"));
+    }
+
+    try {
+      dispatch(signInStart());
+
+      const res = await fetch(`${API_BASE_URL}/api/users/login`, {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+      console.log(data);
+
+      if (data.success === false) {
+        dispatch(signInFailure(data.message));
+      }
+
+      if (res.ok) {
+        dispatch(signInSuccess(data))
+        navigate("/");
+      }
+    } catch (error) {
+      dispatch(signInFailure(error.message));
+    }
+  };
+
   return (
     <div className="min-h-screen flex my-10">
       <div className="flex p-3 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-5">
@@ -22,7 +73,7 @@ function Login() {
         </div>
         {/* rigth */}
         <div className="flex-1">
-          <form className="flex flex-col gap-3">
+          <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
             {/* username password */}
             <div>
               <Label value="Username" />
@@ -31,6 +82,7 @@ function Login() {
                 placeholder="example123"
                 id="username"
                 autoCapitalize="none"
+                onChange={handleChange}
               />
             </div>
             <div>
@@ -39,6 +91,7 @@ function Login() {
                 type="password"
                 placeholder="*********"
                 id="password"
+                onChange={handleChange}
               />
             </div>
             <Button
@@ -62,6 +115,11 @@ function Login() {
               Sign Up
             </Link>
           </div>
+          {error && (
+            <Alert className="mt-5" color="failure">
+              {error}
+            </Alert>
+          )}
         </div>
       </div>
     </div>
