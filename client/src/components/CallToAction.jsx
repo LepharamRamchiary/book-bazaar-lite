@@ -27,6 +27,7 @@ export default function CallToAction() {
       link: "https://explore-echo-rust.vercel.app",
       gradientColors: "from-green-400 to-blue-500",
     },
+    
   ];
 
   return (
