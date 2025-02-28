@@ -41,14 +41,20 @@ function Login() {
 
       const data = await res.json();
 
-      // console.log("Login API response:", data);
+      console.log("Login API response:", data);
+      // console.log(data.message);
+      // console.log(data.data.user.fullname);
+      // console.log(data.data.accessToken);
+      
+      
       // console.log("User data in response:", data.data.user);
       // console.log("Access token in response:", data.data.accessToken);
 
       if (!res.ok) {
+        // console.log(data.message);
         return dispatch(signInFailure(data.message));
       }
-      localStorage.setItem("accessToken", data.accessToken);
+      localStorage.setItem("accessToken", data.data.accessToken);
       dispatch(
         signInSuccess({
           currentUser: data.data.user,

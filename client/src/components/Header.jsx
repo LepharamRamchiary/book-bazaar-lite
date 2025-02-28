@@ -29,16 +29,12 @@ export default function Header() {
 
   const handleSignout = async () => {
     try {
-      // Clear token from Redux for UI updates
       dispatch(signoutSuccess());
-
-      // Clear localStorage
       localStorage.removeItem("accessToken");
 
-      // Call logout API (the token will be sent in cookies automatically)
       const res = await fetch(`${API_BASE_URL}/api/users/logout`, {
         method: "POST",
-        credentials: "include", // Important for cookies
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -47,9 +43,10 @@ export default function Header() {
       const data = await res.json();
 
       if (!res.ok) {
-        console.error("Logout failed:", data.message);
+        console.error("Logout failed:", data.data.message);
       } else {
-        console.log("Logout successful:", data.message);
+        console.log("Logout successful");
+        navigate("/login");
       }
     } catch (error) {
       console.error("Logout error:", error.message);
@@ -100,21 +97,18 @@ export default function Header() {
             arrowIcon={false}
             inline
             label={
-              <Avatar alt="user" img={currentUser.profilePicture} rounded />
+              <Avatar alt="user" img={currentUser.avatar} rounded />
             }
           >
             <Dropdown.Header>
-              <span className="block text-sm p-2">{currentUser.username}</span>
-              <span className="block text-sm font-semibold truncate p-2">
-                {currentUser.email}
-              </span>
+              <span className="block text-sm p-2">{currentUser.fullname}</span>
             </Dropdown.Header>
             <div className="flex flex-col items-center justify-center">
               <Link to={"/dashboard?tab=profile"}>
                 <Dropdown.Item>Profile</Dropdown.Item>
               </Link>
               <Dropdown.Divider />
-              <Dropdown.Item onClick={handleSignout}>Sign Out</Dropdown.Item>
+              <Dropdown.Item onClick={handleSignout}>Logout</Dropdown.Item>
             </div>
           </Dropdown>
         ) : (
