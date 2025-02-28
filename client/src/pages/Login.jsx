@@ -20,12 +20,11 @@ function Login() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!formData.username || !formData.password) {
-      return dispatch(signInFailure("All fill are required"));
+      return dispatch(signInFailure("All fields are required"));
     }
 
     try {
@@ -36,20 +35,28 @@ function Login() {
         headers: {
           "Content-type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify(formData),
       });
 
       const data = await res.json();
-      console.log(data);
 
-      if (data.success === false) {
-        dispatch(signInFailure(data.message));
-      }
+      // console.log("Login API response:", data);
+      // console.log("User data in response:", data.data.user);
+      // console.log("Access token in response:", data.data.accessToken);
 
-      if (res.ok) {
-        dispatch(signInSuccess(data))
-        navigate("/");
+      if (!res.ok) {
+        return dispatch(signInFailure(data.message));
       }
+      localStorage.setItem("accessToken", data.accessToken);
+      dispatch(
+        signInSuccess({
+          currentUser: data.data.user,
+          accessToken: data.data.accessToken,
+        })
+      );
+
+      navigate("/");
     } catch (error) {
       dispatch(signInFailure(error.message));
     }

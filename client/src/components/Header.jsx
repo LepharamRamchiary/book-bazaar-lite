@@ -6,6 +6,7 @@ import { FaMoon, FaSun } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../redux/theme/themeSlice.js";
 import { signoutSuccess } from "../redux/user/userSlice.js";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export default function Header() {
   const path = useLocation().pathname;
@@ -13,6 +14,7 @@ export default function Header() {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
   const { theme } = useSelector((state) => state.theme);
+  const accessToken = useSelector((state) => state.user.accessToken);
 
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
@@ -27,17 +29,30 @@ export default function Header() {
 
   const handleSignout = async () => {
     try {
-      const res = await fetch("/api/users/logout", {
+      // Clear token from Redux for UI updates
+      dispatch(signoutSuccess());
+
+      // Clear localStorage
+      localStorage.removeItem("accessToken");
+
+      // Call logout API (the token will be sent in cookies automatically)
+      const res = await fetch(`${API_BASE_URL}/api/users/logout`, {
         method: "POST",
+        credentials: "include", // Important for cookies
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
+
       const data = await res.json();
+
       if (!res.ok) {
-        console.log(data.message);
+        console.error("Logout failed:", data.message);
       } else {
-        dispatch(signoutSuccess());
+        console.log("Logout successful:", data.message);
       }
     } catch (error) {
-      console.log(error.message);
+      console.error("Logout error:", error.message);
     }
   };
 
@@ -57,7 +72,6 @@ export default function Header() {
         <span className="px-2 py-1 bg-gradient-to-r from-violet-400 rounded-lg dark:text-white">
           Book Bazaar Lite
         </span>
-       
       </Link>
       <form onSubmit={handleSubmit}>
         <TextInput
@@ -104,7 +118,7 @@ export default function Header() {
             </div>
           </Dropdown>
         ) : (
-          <Link to="/sign-in">
+          <Link to="/login">
             <Button gradientDuoTone="purpleToBlue" outline>
               Sign In
             </Button>
@@ -126,4 +140,3 @@ export default function Header() {
     </Navbar>
   );
 }
-
