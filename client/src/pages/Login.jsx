@@ -90,8 +90,7 @@ function Login() {
             Lite
           </Link>
           <p className="text-sm mt-5">
-            This is a demo project. You can sign up with your username,
-            fullname, avatar, email and password
+            This is a demo project. You can sign in with your username and password
           </p>
         </div>
         {/* rigth */}
@@ -132,6 +131,11 @@ function Login() {
               )}
             </Button>
           </form>
+          <div className="flex gap-2 text-sm mt-5">
+            <Link to="/forgot-password" className="text-blue-500">
+              Forgot Password
+            </Link>
+          </div>
           <div className="flex gap-2 text-sm mt-5">
             <span>Dont Have an account?</span>
             <Link to="/register" className="text-blue-500">

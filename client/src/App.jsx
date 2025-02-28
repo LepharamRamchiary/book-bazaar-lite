@@ -8,6 +8,8 @@ import Footer from "./components/Footer";
 import Projects from "./pages/Projects";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import ForgotPassword from "./pages/ForgotPassword";
+import SetNewPassword from "./pages/SetNewPassword";
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
           <Route path="/projects" element={<Projects />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/set-new-pass" element={<SetNewPassword />} />
         </Routes>
         <Footer />
       </BrowserRouter>
