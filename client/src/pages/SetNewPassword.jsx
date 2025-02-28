@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
-import { forgotPassword } from "../redux/user/userSlice.js";
+import { forgotInFailure } from "../redux/user/userSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -18,14 +18,14 @@ function SetNewPassword() {
   const handleSubmit = async (e) => {
     try {
     } catch (error) {
-      dispatch(forgotPassword(error.message));
+      dispatch(forgotInFailure(error.message));
     }
   };
 
   useEffect(() => {
     if (error) {
       const timer = setTimeout(() => {
-        dispatch(signInFailure(null));
+        dispatch(forgotInFailure(null));
       }, 8000);
 
       return () => clearTimeout(timer);

@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
 import {
-    forgotPassword
+    forgotInStart,
+  forgotSuccess,
+  forgotInFailure
 } from "../redux/user/userSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -17,16 +19,48 @@ function ForgotPassword() {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
   const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if(!formData.email){
+        return dispatch(forgotInFailure("Email fill must be required"))
+    }
     try {
+        dispatch(forgotInStart());
+
+        const res = await fetch(`${API_BASE_URL}/api/users/forgot-password`, {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json",
+            },
+            credentials: "include",
+            body: JSON.stringify(formData),
+        })
+
+        const data = await res.json()
+
+        console.log("forgot data", data);
+
+        if(!res.ok){
+            return dispatch(forgotInFailure(data.message))
+        }
+
+        localStorage.setItem("resetToken", data.data.resetToken)
+        dispatch(forgotSuccess({
+            currentUser: data.data.user,
+            resetToken: data.data.resetToken,
+        }))
+
+        navigate("/set-new-pass")
+        
     } catch (error) {
-      dispatch(forgotPassword(error.message));
+      dispatch(forgotInFailure(error.message));
     }
   };
 
   useEffect(() => {
     if (error) {
       const timer = setTimeout(() => {
-        dispatch(signInFailure(null));
+        dispatch(forgotInFailure(null));
       }, 8000);
 
       return () => clearTimeout(timer);
