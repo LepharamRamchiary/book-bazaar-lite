@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -67,6 +67,16 @@ function Login() {
       dispatch(signInFailure(error.message));
     }
   };
+
+  useEffect(() => {
+    if(error){
+      const timer = setTimeout(() => {
+        dispatch(signInFailure(null))
+      },8000)
+
+      return () => clearTimeout(timer)
+    }
+  }, [error, dispatch])
 
   return (
     <div className="min-h-screen flex my-10">
