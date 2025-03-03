@@ -3,24 +3,24 @@ import React from "react";
 function BannerToAction() {
   const cards = [
     {
-      title: "Place Your Order",
-      description: "Full Stack using MERN",
+      title: "Explore the Feature",
+      description: "A powerful full-stack application built with the MERN stack, offering seamless book management with an intuitive user experience.",
       image:
         "https://images.unsplash.com/photo-1618477388954-7852f32655ec?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       link: "https://developer-hub-blog.onrender.com",
       gradientColors: "from-cyan-400 to-teal-500",
     },
     {
-      title: "Payment Method",
-      description: "Full Stack using React and RapidAPI",
+      title: "Place your order",
+      description: "You can place your order quickly and easily, ensuring a smooth and hassle-free experience.",
       image:
         "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Youtube_shorts_icon.svg/800px-Youtube_shorts_icon.svg.png",
       link: "https://youtube-clone-six-amber.vercel.app",
       gradientColors: "from-red-400 to-pink-500",
     },
     {
-      title: "Explore eco",
-      description: "Frontend only using React",
+      title: "Paymet method",
+      description: "You can make payments just like any other e-commerce website, ensuring a simple and secure transaction process.",
       image:
         "https://images.squarespace-cdn.com/content/v1/659d8eadf813547580d2b589/ffe8b348-d2fa-45c9-9fca-d7b152f1a3e3/website-homepage-logo-for-print-large.png?format=1500w",
       link: "https://explore-echo-rust.vercel.app",
@@ -39,8 +39,8 @@ function BannerToAction() {
                 className="grid md:grid-cols-2 gap-4 items-center"
               >
                 {/* Left side: Card */}
-                <div className="flex justify-center md:justify-start">
-                  <div className="card-parent">
+                <div className="flex items-center justify-center md:justify-start">
+                  <div className="card-parent flex justify-center md:justify-start">
                     <div
                       className={`card bg-gradient-to-br ${card.gradientColors} w-60 h-60 md:w-72 md:h-72 flex items-center justify-center rounded-lg shadow-lg`}
                     >
@@ -68,7 +68,7 @@ function BannerToAction() {
                               href={card.link}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="view-more-button"
+                              className="view-more-button dark:text-black"
                             >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -94,7 +94,7 @@ function BannerToAction() {
 
                 {/* Right side: Description */}
                 <div className="flex items-center justify-center md:justify-start">
-                  <p className="text-center md:text-left text-gray-700 animate-fade-in">
+                  <p className="text-center md:text-left text-gray-700 dark:text-white animate-fade-in">
                     {card.description}
                   </p>
                 </div>
@@ -109,13 +109,13 @@ function BannerToAction() {
               >
                 {/* Left side: Description */}
                 <div className="flex items-center justify-center md:justify-end order-2 md:order-1">
-                  <p className="text-center md:text-right text-gray-700 animate-fade-in">
+                  <p className="text-center md:text-start text-gray-700 dark:text-white animate-fade-in">
                     {card.description}
                   </p>
                 </div>
 
                 {/* Right side: Card */}
-                <div className="flex justify-center md:justify-end order-1 md:order-2 w-full">
+                <div className="flex justify-center items-center md:justify-end order-1 md:order-2 w-full">
                   <div className="card-parent w-full flex justify-center md:justify-end">
                     <div
                       className={`card bg-gradient-to-br ${card.gradientColors} w-60 h-60 md:w-72 md:h-72 flex items-center justify-center rounded-lg shadow-lg`}
@@ -144,7 +144,7 @@ function BannerToAction() {
                               href={card.link}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="view-more-button"
+                              className="view-more-button dark:text-black"
                             >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"

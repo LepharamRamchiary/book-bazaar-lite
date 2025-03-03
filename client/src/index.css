@@ -88,7 +88,7 @@ body {
 
 .content .text {
   display: block;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.959);
   font-size: 15px;
   margin-top: 20px;
 }
@@ -284,5 +284,4 @@ body {
 .card-parent:hover .card .logo .circle5 {
   transform: translate3d(0, 0, 120px);
 }
-
 
