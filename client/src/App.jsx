@@ -10,6 +10,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import ForgotPassword from "./pages/ForgotPassword";
 import SetNewPassword from "./pages/SetNewPassword";
+import Feed from "./pages/Feed";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/set-new-pass" element={<SetNewPassword />} />
+          <Route path="/feed" element={<Feed />} />
         </Routes>
         <Footer />
       </BrowserRouter>
